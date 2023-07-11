@@ -1,0 +1,128 @@
+create database study character set utf8mb4 collate utf8mb4_unicode_ci;
+
+create user chris@localhost identified by 'passward';
+
+grant all privileges on study.* to chris@localhost;
+
+show grants for chris@localhost;
+
+SELECT GRANTEE, PRIVILEGE_TYPE, IS_GRANTABLE FROM INFORMATION_SCHEMA.USER_PRIVILEGES;
+
+create table person(
+    PersonId int,
+    FirstName varchar(255),
+    LastName varchar(255),
+    Address varchar(255),
+    City varchar(255)
+
+);
+
+drop table person
+
+create table person(
+    PersonId int,
+    FirstName varchar(255),
+    LastName varchar(255),
+    Address varchar(255),
+    City varchar(255),
+    primary key(column1)
+
+);
+drop table person
+create table person(
+    PersonId int not null AUTO_INCREMENT,
+    FirstName varchar(255),
+    LastName varchar(255),
+    Address varchar(255),
+    City varchar(255),
+    primary key(PersonID)
+
+);
+
+insert into person(FirstName, LastName, Address, City) values (
+    "JaeJin", "Choi", "Korea", "99"
+);
+
+
+alter table person add Email varchar(255);
+
+create table Students(
+    StudentID int not null AUTO_INCREMENT,
+    Name varchar(255),
+    Age int,
+    Address varchar(255),
+    primary key(StudentID)
+
+);
+
+create table grades(
+    StudentID int not null AUTO_INCREMENT,
+    Math int,
+    English int,
+    Science int,
+    primary key(StudentID)  
+
+);
+
+insert into students (name, age, address)
+    values("김무무", 25, "서울");
+
+update students set age=27 where StudentID=1;
+select *from students;
+delete from students;
+
+select *from students;
+truncate table students;
+select *from students;
+
+insert into students (name, age, address)
+    values('홍길동', 30, '인천');
+
+insert into students (name, age, address)
+    values('이연걸', 60, '서울'); 
+insert into students (name, age, address)
+    values('이몽룡', 42, '대전') ;
+insert into students (name, age, address)
+    values('성춘향', 27, '경기');
+
+insert into grades (StudentID, Math, English, Science)
+    values(2, 90, 80,  50 );
+insert into grades (StudentID, Math, English, Science)
+    values(3, 69, 76,  65  );
+insert into grades (StudentID, Math, English, Science)
+    values(4, 98, 87,  97);
+insert into grades (StudentID, Math, English, Science)
+    values(5, 87, 67,  79)
+
+
+-- https://www.w3schools.com/sql/trysql.asp?filename=trysql_select_all
+
+
+ 
+--Q. 직원(Employees)중 이름(LastName)이 ‘King’인 직원의 이름과 생일(BirthDate)과 노트(Notes)를 조회해주세요.
+--Table: Employees
+-- SELECT LastName, BirthDate, Notes  FROM Employees where LastName is 'King'
+
+--Q. 상품(Products)중 상품명(ProductName)이 ‘C’로 시작하고 가격(Price)이 20보다 큰 상품의 상품명과 가격을 가격이 비싼순으로 조회해주세요.
+--Table: Products
+--select ProductName,Price  from Products where ProductName LIKE "C%" and Price > 20 order by Price
+--Q. 상품(Products)의 카테고리아이디(CategoryID) 별로 상품가격의 합, 가장 비싼 상품 가격, 가장 저렴한 상품 가격을 구하세요.
+--Table: Product
+--select sum(Price) as '상품가격의 합', max(Price) as '가장 비싼 상품 가격', min(Price) as '가장 저렴한 상품 가격' from Products group by CategoryID
+--Q. 상품(Products)의 카테고리아이디(CategoryID) 별로 상품개수와 상품개수가 10개가 넘을경우 많음 아니면 적음이 표시되
+--어있는 칼럼을 하나 추가하고 상품수가 많은 순서대로 조회해주세요.
+--Table: Products
+-- select count(ProductID) as '상품개수', case  when count(ProductID) > 10 then '많아유' else '적어유' end as '많니?' from Products group by CategoryID order by count(ProductID) DESC
+--Q. 고객(Customers)의 국가(Country)별 고객수와 백분위 (국가별고객수 / 전체고객수 * 100)을 구하세요
+--Table: Customers
+select count(CustomerID)/91 *100 as '백분위'  from Customers  group by Country
+
+select Country, Numcustomer, totalcustomer, Numcustomer/totalcustomer *100 as percontile
+from (
+    select (select count(*) from Customers) as totalcustomer, count(CustomerID)/totalcustomer *100 as '백분위'  
+    from Customers  group by Country
+);
+
+
+
+
